@@ -12,7 +12,6 @@ interface ChatWidgetProps {
 export const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
   const {
     isOpen,
-    isMinimized,
     messages,
     isLoading,
     error,
@@ -22,35 +21,27 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ config }) => {
     clearError,
   } = useChat(config);
 
-  if (isMinimized) {
-    return (
-      <div className='chat-widget' style={{ zIndex: config.zIndex }}>
-        <ChatButton
-          onClick={toggleChat}
-          isOpen={isOpen}
-          primaryColor={config.primaryColor}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className='chat-widget' style={{ zIndex: config.zIndex }}>
-      <ChatWindow
-        messages={messages}
-        onSendMessage={sendUserMessage}
-        onMinimize={minimizeChat}
-        isLoading={isLoading}
-        error={error}
-        title={config.title}
-        welcomeMessage={config.welcomeMessage}
-        theme={config.theme}
-        primaryColor={config.primaryColor}
-      />
+      {/* Floating button only when chat is closed */}
       {!isOpen && (
         <ChatButton
           onClick={toggleChat}
-          isOpen={isOpen}
+          isOpen={false}
+          primaryColor={config.primaryColor}
+        />
+      )}
+      {/* Chat window only when open */}
+      {isOpen && (
+        <ChatWindow
+          messages={messages}
+          onSendMessage={sendUserMessage}
+          onMinimize={minimizeChat}
+          isLoading={isLoading}
+          error={error}
+          title={config.title}
+          welcomeMessage={config.welcomeMessage}
+          theme={config.theme}
           primaryColor={config.primaryColor}
         />
       )}

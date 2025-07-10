@@ -47,9 +47,5 @@ module.exports = (env, argv) => {
       port: 3000,
       hot: true,
     },
-    externals: {
-      react: 'React',
-      'react-dom': 'ReactDOM',
-    },
   };
 };

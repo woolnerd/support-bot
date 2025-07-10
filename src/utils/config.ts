@@ -1,7 +1,17 @@
 import { WidgetConfig } from '../types';
 
 export function getWidgetConfig(): WidgetConfig {
-  const script = document.currentScript as HTMLScriptElement;
+  let script = document.currentScript as HTMLScriptElement | null;
+
+  // Fallback: find the script by src if currentScript is null
+  if (!script) {
+    const scripts = Array.from(document.getElementsByTagName('script'));
+    script =
+      (scripts.find((s) => s.src && s.src.includes('widget.js')) as
+        | HTMLScriptElement
+        | undefined) || null;
+  }
+
   const dataset = script?.dataset || {};
 
   return {
