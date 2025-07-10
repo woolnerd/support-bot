@@ -1,0 +1,65 @@
+.message-input {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0;
+}
+
+.message-input__field {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  background: white;
+  color: #333;
+}
+
+.chat-window--dark .message-input__field {
+  background: #333;
+  color: white;
+  border-color: #555;
+}
+
+.message-input__field:focus {
+  border-color: var(--primary-color, #007bff);
+}
+
+.message-input__field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.message-input__send {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: var(--primary-color, #007bff);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.message-input__send:hover:not(:disabled) {
+  transform: scale(1.05);
+  background: var(--primary-color, #007bff);
+  filter: brightness(1.1);
+}
+
+.message-input__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.message-input__send svg {
+  width: 16px;
+  height: 16px;
+}

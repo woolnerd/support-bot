@@ -1,0 +1,98 @@
+{
+  "name": "Support Chat Widget Backend",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "support-chat",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "webhookId": "support-chat-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract data from the webhook request\nconst message = $input.first().json.message;\nconst userId = $input.first().json.userId;\nconst sessionId = $input.first().json.sessionId;\nconst userInfo = $input.first().json.userInfo;\n\n// Simple response logic - you can replace this with AI, FAQ, or routing logic\nlet response = \"Hi! How can I help you today?\";\nlet messageType = \"bot\";\n\n// Example: Check for keywords and provide responses\nif (message.toLowerCase().includes('help')) {\n  response = \"I'm here to help! What specific issue are you facing?\";\n} else if (message.toLowerCase().includes('pricing')) {\n  response = \"Our pricing plans start at $9/month. Would you like to know more?\";\n} else if (message.toLowerCase().includes('contact')) {\n  response = \"You can reach us at support@example.com or call us at 1-800-123-4567.\";\n} else if (message.toLowerCase().includes('thanks') || message.toLowerCase().includes('thank you')) {\n  response = \"You're welcome! Is there anything else I can help you with?\";\n}\n\n// Create the response object\nconst responseData = {\n  response: response,\n  messageId: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,\n  timestamp: new Date().toISOString(),\n  type: messageType,\n  sessionId: sessionId\n};\n\nreturn [{ json: responseData }];"
+      },
+      "id": "process-message",
+      "name": "Process Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": "support-chat-logs",
+        "options": {}
+      },
+      "id": "log-conversation",
+      "name": "Log Conversation",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [680, 500],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "google-sheets-credentials",
+          "name": "Google Sheets"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Process Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Message": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log Conversation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1",
+  "meta": {
+    "instanceId": "your-n8n-instance"
+  },
+  "id": "support-chat-workflow",
+  "tags": ["support", "chat", "widget"]
+}

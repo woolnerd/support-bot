@@ -1,0 +1,44 @@
+.chat-widget {
+  position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Position variants */
+.chat-widget[data-position='bottom-left'] .chat-button,
+.chat-widget[data-position='bottom-left'] .chat-window {
+  left: 20px;
+  right: auto;
+}
+
+.chat-widget[data-position='top-right'] .chat-button,
+.chat-widget[data-position='top-right'] .chat-window {
+  top: 20px;
+  bottom: auto;
+}
+
+.chat-widget[data-position='top-left'] .chat-button,
+.chat-widget[data-position='top-left'] .chat-window {
+  top: 20px;
+  left: 20px;
+  bottom: auto;
+  right: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .chat-widget .chat-window {
+    width: calc(100vw - 40px);
+    height: calc(100vh - 120px);
+    bottom: 80px;
+    right: 20px;
+    left: 20px;
+  }
+
+  .chat-widget .chat-button {
+    bottom: 10px;
+    right: 10px;
+  }
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support Widget Demo</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .demo-section {
+        margin-bottom: 30px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+      }
+      .demo-section h2 {
+        color: #495057;
+        margin-top: 0;
+      }
+      .demo-section p {
+        color: #6c757d;
+        line-height: 1.6;
+      }
+      .code-block {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 16px;
+        border-radius: 6px;
+        font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        font-size: 14px;
+        overflow-x: auto;
+      }
+      .feature-list {
+        list-style: none;
+        padding: 0;
+      }
+      .feature-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #e9ecef;
+      }
+      .feature-list li:before {
+        content: '✅ ';
+        margin-right: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Support Chat Widget Demo</h1>
+
+      <div class="demo-section">
+        <h2>Features</h2>
+        <ul class="feature-list">
+          <li>Lightweight and embeddable</li>
+          <li>Customizable themes and colors</li>
+          <li>Real-time messaging</li>
+          <li>Responsive design</li>
+          <li>Persistent chat history</li>
+          <li>Easy configuration via data attributes</li>
+        </ul>
+      </div>
+
+      <div class="demo-section">
+        <h2>Configuration</h2>
+        <p>The widget is configured with the following options:</p>
+        <div class="code-block">
+          &lt;script src="dist/widget.js"
+          data-endpoint="https://your-n8n-instance/webhook/support-chat"
+          data-theme="light" data-primary-color="#007bff" data-title="Support
+          Chat" data-welcome-message="Hi! How can we help you?"
+          data-position="bottom-right" data-auto-open="false"&gt;&lt;/script&gt;
+        </div>
+      </div>
+
+      <div class="demo-section">
+        <h2>n8n Integration</h2>
+        <p>
+          This widget communicates with an n8n workflow backend. The widget
+          sends messages in this format:
+        </p>
+        <div class="code-block">
+          { "message": "Hello, I need help", "userId": "user_123", "sessionId":
+          "session_456", "timestamp": "2024-01-15T10:30:00Z", "userInfo": {
+          "name": "John Doe", "email": "john@example.com" } }
+        </div>
+        <p>And expects responses in this format:</p>
+        <div class="code-block">
+          { "response": "Hi! How can I help you today?", "messageId": "msg_789",
+          "timestamp": "2024-01-15T10:30:05Z", "type": "bot" }
+        </div>
+      </div>
+
+      <div class="demo-section">
+        <h2>Try It Out</h2>
+        <p>
+          Click the chat button in the bottom-right corner to test the widget.
+          Since there's no backend configured, you'll see an error message, but
+          you can see the UI in action.
+        </p>
+      </div>
+    </div>
+
+    <!-- Support Widget -->
+    <script
+      src="../dist/widget.js"
+      data-endpoint="https://your-n8n-instance/webhook/support-chat"
+      data-theme="light"
+      data-primary-color="#007bff"
+      data-title="Support Chat"
+      data-welcome-message="Hi! How can we help you?"
+      data-position="bottom-right"
+      data-auto-open="false"
+    ></script>
+  </body>
+</html>
